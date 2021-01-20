@@ -36,7 +36,7 @@ int main(int argc, char **argv)
             }
             j++;   
         } 
-        ft_putchar('\n');      
+        ft_putchar('\n');
     }else
           ft_putchar('\n');
 }

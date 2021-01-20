@@ -13,6 +13,7 @@ void ft_crear()
     prc_width = -1;
     specifer = 0;
 }
+
 int ft_strlen(char *str)
 {
     int i =0;
@@ -23,6 +24,7 @@ int ft_strlen(char *str)
     return (i);
     
 }
+
 void ft_putchar(char c)
 {
     write(1, &c, 1);
@@ -52,28 +54,27 @@ void ft_putspecstr(char *str, int len)
     }
 }
 
-int			ft_atoi(const char *str)
+int ft_atoi(const char *str)
 {
-	int		i;
-	long	a;
-	int		s;
+    int i = 0;
+    long a = 0;
+    int s = 1;
 
-	i = 0;
-	a = 0;
-	s = 1;
-	while ((str[i] >= 8 && str[i] <= 13) || str[i] == 32)
-		i++;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			s = -1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-		a = a * 10 + str[i++] - '0';
-	return (a * s);
+    while ((str[i] >= 8 && str[i] <= 13) || str[i] == 32)
+    {   
+        i++;
+    }
+    if(str[i] == '-' || str[i] == '+')
+    {
+        if(str[i] == '-')
+            s = -1;
+        i++;
+    }
+    while (str[i] >= 48 && str[i] <= 57)
+        a = a * 10 + str[i++] - 48;
+    return(a * s);
 }
-    
+
 int len_num(long nbr)
 {
     int count;
@@ -108,6 +109,7 @@ void ft_putnbr(long nbr)
     else
         ft_putchar(nbr + 48);
 }
+
 void ft_cnv_d_to_hex(unsigned int nbr)
 {
     if(nbr > 0)
@@ -117,8 +119,7 @@ void ft_cnv_d_to_hex(unsigned int nbr)
             ft_putchar(nbr % 16 + 87);
         else if (nbr % 16 <= 9)
             ft_putchar(nbr % 16 + 48);
-        
-    }  
+    }
 }
 
 int len_hex(unsigned int nbr)
@@ -166,16 +167,11 @@ void ft_getaftermod(const char **fmt)
 
 void ft_width_trick(int len, char c)
 {
-    int i;
-    i = 0;
-    if (len > 0)
+  while (len > 0)
     {
-        while (i < len)
-        {
-            pc++;
-            write(1, &c, 1);
-            i++;
-        }
+        write(1, &c, 1);
+        len--;
+        pc++;
     }
 }
 
@@ -201,7 +197,7 @@ void handle_string(char *str)
     {
         ft_putspecstr(str, prc_width);
     }
-    if (prc_width > l || prc_width == -1)
+    if (prc_width > l || prc_width == -1 )
         ft_putstr(str);
 }
 
@@ -214,12 +210,28 @@ void handle_int(long nbr)
     else
         l = len_num(nbr);
         if (width <= prc_width && prc_width > l)
+        {
+            if (nbr < 0)
+            {
+                ft_putchar('-');
+                nbr = nbr * -1;
+                l--;
+            }
             ft_width_trick(prc_width - l, '0');
+        }
         else if (width > prc_width && prc_width <= l)
             ft_width_trick(width - l, ' ');
         else if (width > prc_width && prc_width > l)
         {
+            if (nbr < 0)
+                width--;
             ft_width_trick(width - prc_width, ' ');
+            if (nbr < 0)
+            {
+                ft_putchar('-');
+                nbr = nbr * -1;
+                l--;
+            }
             ft_width_trick(prc_width - l, '0');
         }
         if (!(nbr == 0 && prc_width == 0))

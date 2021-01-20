@@ -1,5 +1,6 @@
 #include "gnl_exam.h"
 #include <stdlib.h>
+
 int to_free(char **ptr)
 {
     if(*ptr)

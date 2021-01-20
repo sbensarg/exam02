@@ -32,7 +32,7 @@ int main(int argc, char **argv)
                     {
                           ft_putchar(argv[1][i]);
                           break;
-                    }                        
+                    }
                 }
                 j++;
             }
